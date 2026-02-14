@@ -59,3 +59,5 @@ Append a brief entry to today's daily note:
 - **Don't delete daily notes.** They're the raw record. Reflection extracts from them; it doesn't replace them.
 - **Merge, don't append.** If MEMORY.md already has a section about a topic, update it in place rather than adding a duplicate entry.
 - **Flag uncertainty.** If something seems important but you're not sure, add it with a note like "(needs confirmation)" rather than skipping it entirely.
+- **Restructure over time.** If MEMORY.md is a chronological dump, restructure it into topical sections during reflection. Curated knowledge > raw logs.
+- **Check for filesystem issues.** Look for recursive nesting (memory/memory/memory/...), orphaned files, or bloat while gathering material.

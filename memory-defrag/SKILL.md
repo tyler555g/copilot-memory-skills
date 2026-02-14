@@ -38,6 +38,7 @@ Look for these common issues:
 | **Orphan files** | Files in memory/ never referenced or updated | Review, merge, or remove |
 | **Inconsistencies** | Contradictory information across files | Resolve to ground truth |
 | **Poor organization** | Related info scattered across files | Restructure by topic |
+| **Recursive nesting** | `memory/memory/memory/...` directories | Delete nested dirs (indexer bug artifact) |
 
 ### 3. Plan Changes
 
