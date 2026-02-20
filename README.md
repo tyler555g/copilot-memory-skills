@@ -1,8 +1,20 @@
 # basic-memory-skills
 
-OpenClaw skills for AI memory management. Works with [Basic Memory](https://github.com/basicmachines-co/basic-memory) or plain OpenClaw memory files.
+OpenClaw skills for AI memory management. Works with [Basic Memory](https://github.com/basicmachines-co/basic-memory) and the [`@openclaw/basic-memory`](https://github.com/basicmachines-co/openclaw-basic-memory) plugin.
 
 ## Skills
+
+### memory-tasks
+
+Structured task tracking that survives context compaction. Creates typed `Task` notes with steps, status, and context — queryable via the BM knowledge graph and validatable against a Picoschema definition.
+
+**When to use:** Multi-step work (3+ steps), anything that might outlast a context window, or after compaction to resume.
+
+### memory-schema
+
+Schema lifecycle management for Basic Memory. Covers discovering unschemaed notes, inferring schemas, creating/editing definitions, validating notes, and detecting drift.
+
+**When to use:** When structured note types emerge (Task, Person, Meeting, etc.) and you want consistency across the knowledge graph.
 
 ### memory-reflect
 
@@ -20,19 +32,42 @@ Memory defragmentation. Reorganizes memory files: splits bloated ones, merges du
 
 ## Installation
 
-Copy skill directories into your OpenClaw workspace skills folder, or install via ClawHub (coming soon).
+### Bundled with the plugin (recommended)
+
+If you use the [`@openclaw/basic-memory`](https://github.com/basicmachines-co/openclaw-basic-memory) plugin, all 4 skills are bundled automatically — no extra install step needed.
+
+### Via npx skills
+
+Install or update skills using the [Skills CLI](https://github.com/vercel-labs/skills):
 
 ```bash
-# Manual install
-cp -r memory-reflect ~/.openclaw/workspace/skills/
-cp -r memory-defrag ~/.openclaw/workspace/skills/
+# Install all skills
+npx skills add basicmachines-co/basic-memory-skills --agent openclaw
+
+# Install a specific skill
+npx skills add basicmachines-co/basic-memory-skills --name memory-tasks --agent openclaw
 ```
+
+### Manual install
+
+```bash
+cp -r memory-tasks ~/.openclaw/skills/
+cp -r memory-reflect ~/.openclaw/skills/
+cp -r memory-defrag ~/.openclaw/skills/
+cp -r memory-schema ~/.openclaw/skills/
+```
+
+Use `~/.openclaw/skills/` for global (shared across workspaces) or `skills/` in your project directory for project-scoped.
 
 ## Works With
 
-- **Basic Memory plugin** — full knowledge graph search + indexing
+- **Basic Memory plugin** — full knowledge graph search + schema validation + indexing
 - **Plain OpenClaw** — works with native memory files (MEMORY.md, memory/)
 - **Any markdown-based memory** — skills operate on plain text files
+
+## Development
+
+See [DEVELOPMENT.md](./DEVELOPMENT.md) for testing and plugin integration details.
 
 ## License
 
