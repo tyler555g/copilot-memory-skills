@@ -1,0 +1,69 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+OpenClaw skills collection for AI memory management. Each skill teaches AI assistants how to effectively use [Basic Memory](https://github.com/basicmachines-co/basic-memory) — a local-first knowledge graph built on markdown files and MCP.
+
+Skills are bundled in the [`@openclaw/basic-memory`](https://github.com/basicmachines-co/openclaw-basic-memory) plugin and can also be installed standalone via `npx skills add`.
+
+## Repository Structure
+
+Each skill is a single `SKILL.md` file in its own directory:
+
+```
+memory-tasks/SKILL.md           # Task tracking across context compaction
+memory-schema/SKILL.md          # Schema lifecycle (discover, infer, validate, drift)
+memory-reflect/SKILL.md         # Sleep-time memory consolidation
+memory-notes/SKILL.md           # Note writing patterns and knowledge graph design
+memory-defrag/SKILL.md          # Memory reorganization and cleanup
+memory-metadata-search/SKILL.md # Structured metadata filtering and queries
+memory-lifecycle/SKILL.md       # Entity status transitions and folder-based archival
+memory-ingest/SKILL.md          # Process external input into structured entities
+memory-research/SKILL.md        # Web research synthesized into BM entities
+```
+
+There is no code to build, lint, or test — this is a pure markdown project.
+
+## SKILL.md Format
+
+Every skill file has YAML frontmatter with `name` (kebab-case identifier) and `description` (one-sentence summary), followed by markdown content:
+
+```markdown
+---
+name: memory-<name>
+description: "What the skill does and when to use it."
+---
+
+# Skill Title
+
+[Sections: When to Use, Key Concepts, How-to, Examples, Guidelines]
+```
+
+## Adding a New Skill
+
+1. Create `memory-<name>/SKILL.md` with frontmatter and markdown instructions
+2. Update `README.md` with the new skill's summary
+3. Mirror the file to the plugin repo (`openclaw-basic-memory/skills/memory-<name>/SKILL.md`)
+4. Add the path to the `skills` array in the plugin's `openclaw.plugin.json`
+5. Commit both repos
+
+## Plugin Sync
+
+After updating any skill, copy it to the companion plugin repo:
+
+```bash
+# From the openclaw-basic-memory repo root
+cp ../basic-memory-skills/memory-<name>/SKILL.md skills/memory-<name>/
+```
+
+## Key Concepts Referenced in Skills
+
+- **Notes**: Markdown files representing entities in the BM knowledge graph
+- **Frontmatter**: YAML metadata (title, type, tags, custom fields)
+- **Observations**: Categorized facts — `- [category] content #tags`
+- **Relations**: Wiki-links creating graph edges — `- relation_type [[Target Note]]`
+- **Schema / Picoschema**: Compact YAML definitions for note structure validation
+- **Memory URLs**: `memory://path-to-note` for programmatic access
+- **MCP Tools**: `bm_write`, `bm_read`, `bm_edit`, `bm_search`, `search_by_metadata`, `bm_schema_validate`, `bm_schema_infer`, `bm_schema_diff`
