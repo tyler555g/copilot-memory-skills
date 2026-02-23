@@ -94,18 +94,20 @@ npx skills update
 
 Skills are installed to your agent's skills directory (e.g., `~/.claude/skills/` for Claude Code global, or `.claude/skills/` for project-scoped).
 
-### Claude Desktop
+### Claude Desktop (claude.ai)
 
-Claude Desktop loads skills as project knowledge. Add the SKILL.md files you want to a Project:
+Claude Desktop loads skills through **Settings > Capabilities**:
 
 1. Clone or download this repository
-2. In Claude Desktop, open (or create) the Project where you use Basic Memory
-3. Add each skill's `SKILL.md` file to the project knowledge via the **Add Content** button
-4. The assistant now has access to those skills in that project's conversations
+2. In Claude, go to **Settings > Capabilities** and ensure both **Code execution** and **Skills** are enabled
+3. Click **Upload skill** and upload the `SKILL.md` file (or ZIP the skill folder and upload that)
+4. Toggle the skill on — Claude will use it automatically when relevant
 
-You can also paste skill content directly into project instructions if you prefer not to upload files.
+Repeat for each skill you want. Custom uploaded skills are private to your account.
 
 > **Tip:** Start with **memory-notes** (core note-writing patterns) and add others as needed. You don't need all 9 at once.
+
+See [Using Skills in Claude](https://support.claude.com/en/articles/12512180-using-skills-in-claude) for more details.
 
 ### Manual install
 
@@ -132,7 +134,7 @@ All 9 skills are also bundled in the [`@openclaw/basic-memory`](https://github.c
 
 These skills work with any AI coding agent that supports the SKILL.md format:
 
-- **Claude Desktop** — add SKILL.md files as project knowledge
+- **Claude Desktop** — upload skill ZIPs via Settings > Capabilities
 - **Claude Code** — loads skills from `~/.claude/skills/` or `.claude/skills/`
 - **Cursor** — AI-powered coding with skill support
 - **Windsurf** — agent-based development with skill loading
