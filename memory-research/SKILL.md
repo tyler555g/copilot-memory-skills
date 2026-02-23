@@ -46,9 +46,9 @@ Search for current information across multiple sources. Aim for 3-5 searches to 
 
 Before proposing a new entity, search Basic Memory:
 
-```typescript
-search_notes({ query: "Acme Corp" })
-search_notes({ query: "acme" })
+```python
+search_notes(query="Acme Corp")
+search_notes(query="acme")
 ```
 
 Try name variations — full name, abbreviation, acronym, domain name.
@@ -117,17 +117,13 @@ After approval, create a structured note. Adapt the template to the entity type:
 
 #### Organization
 
-```typescript
-write_note({
-  title: "Acme Corp",
-  folder: "organizations",
-  content: `---
-title: Acme Corp
-type: organization
-tags: [organization, relevant-tags]
----
-
-# Acme Corp
+```python
+write_note(
+  title="Acme Corp",
+  directory="organizations",
+  note_type="organization",
+  tags=["organization", "relevant-tags"],
+  content="""# Acme Corp
 
 ## Overview
 [2-3 sentence description from research]
@@ -148,23 +144,19 @@ tags: [organization, relevant-tags]
 - [additional observations from research findings]
 
 ## Relations
-- [Link to related entities already in the knowledge graph]`
-})
+- [Link to related entities already in the knowledge graph]"""
+)
 ```
 
 #### Person
 
-```typescript
-write_note({
-  title: "Jane Smith",
-  folder: "people",
-  content: `---
-title: Jane Smith
-type: person
-tags: [person, relevant-tags]
----
-
-# Jane Smith
+```python
+write_note(
+  title="Jane Smith",
+  directory="people",
+  note_type="person",
+  tags=["person", "relevant-tags"],
+  content="""# Jane Smith
 
 ## Overview
 [Current role and affiliation. Brief background.]
@@ -180,23 +172,19 @@ tags: [person, relevant-tags]
 - [source] Researched on YYYY-MM-DD
 
 ## Relations
-- works_at [[Organization]]`
-})
+- works_at [[Organization]]"""
+)
 ```
 
 #### Technology
 
-```typescript
-write_note({
-  title: "Technology Name",
-  folder: "concepts",
-  content: `---
-title: Technology Name
-type: concept
-tags: [concept, technology, relevant-tags]
----
-
-# Technology Name
+```python
+write_note(
+  title="Technology Name",
+  directory="concepts",
+  note_type="concept",
+  tags=["concept", "technology", "relevant-tags"],
+  content="""# Technology Name
 
 ## Overview
 [What it is and what problem it solves]
@@ -213,24 +201,24 @@ tags: [concept, technology, relevant-tags]
 - [source] Researched on YYYY-MM-DD
 
 ## Relations
-- [Link to related concepts, tools, or projects in the knowledge graph]`
-})
+- [Link to related concepts, tools, or projects in the knowledge graph]"""
+)
 ```
 
-Adapt these templates freely. The key elements are: frontmatter with type/tags, an overview, structured details, observations with categories, and relations.
+Adapt these templates freely. The key elements are: note_type/tags parameters, an overview, structured details, observations with categories, and relations.
 
 ### Step 6: Store Source Context
 
 If the user provided context with their request, capture it in the entity:
 
-```typescript
-// User said: "Acme Corp — saw their demo at the conference last week"
-edit_note({
-  identifier: "Acme Corp",
-  operation: "append",
-  heading: "Observations",
-  content: "- [context] Saw their demo at conference, week of 2026-02-17"
-})
+```python
+# User said: "Acme Corp — saw their demo at the conference last week"
+edit_note(
+  identifier="Acme Corp",
+  operation="append",
+  section="Observations",
+  content="- [context] Saw their demo at conference, week of 2026-02-17"
+)
 ```
 
 This context is often the most valuable part — it's the user's relationship to the entity, which web research can't provide.

@@ -147,8 +147,8 @@ With BM's schema system, tasks are fully queryable:
 | `search_notes("[status] blocked")` | Blocked tasks |
 | `search_notes("[assigned_to] claude")` | My tasks |
 | `search_notes("type:Task [blockers]")` | Tasks with blockers |
-| `schema_validate({ noteType: "Task" })` | Validate all tasks against schema |
-| `schema_diff({ noteType: "Task" })` | Detect drift between schema and actual task notes |
+| `schema_validate(noteType="Task")` | Validate all tasks against schema |
+| `schema_diff(noteType="Task")` | Detect drift between schema and actual task notes |
 
 ## Guidelines
 

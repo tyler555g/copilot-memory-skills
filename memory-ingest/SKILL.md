@@ -60,18 +60,18 @@ Scan the content for entities worth tracking in the knowledge graph:
 
 For each extracted entity, search Basic Memory with multiple query variations:
 
-```typescript
-// Person — try full name, last name
-search_notes({ query: "Sarah Chen" })
-search_notes({ query: "Chen" })
+```python
+# Person — try full name, last name
+search_notes(query="Sarah Chen")
+search_notes(query="Chen")
 
-// Organization — try full name, abbreviation, acronym
-search_notes({ query: "National Renewable Energy Laboratory" })
-search_notes({ query: "NREL" })
+# Organization — try full name, abbreviation, acronym
+search_notes(query="National Renewable Energy Laboratory")
+search_notes(query="NREL")
 
-// Topic — try the full term and keywords
-search_notes({ query: "edge computing" })
-search_notes({ query: "edge inference" })
+# Topic — try the full term and keywords
+search_notes(query="edge computing")
+search_notes(query="edge inference")
 ```
 
 Classify each entity as:
@@ -115,17 +115,14 @@ Create the primary note for the ingested content. This is the "record of what ha
 
 ### Meeting / Conversation Note
 
-```typescript
-write_note({
-  title: "NovaTech Meeting - Jordan Rivera - Feb 22, 2026",
-  folder: "meetings/2026",
-  content: `---
-title: NovaTech Meeting - Jordan Rivera - Feb 22, 2026
-type: meeting
-tags: [meeting, novatech, federated-learning]
-date: 2026-02-22
----
-
+```python
+write_note(
+  title="NovaTech Meeting - Jordan Rivera - Feb 22, 2026",
+  directory="meetings/2026",
+  note_type="meeting",
+  tags=["meeting", "novatech", "federated-learning"],
+  metadata={"date": "2026-02-22"},
+  content="""
 # NovaTech Meeting - Jordan Rivera - Feb 22, 2026
 
 Brief one-sentence summary of what this meeting was about.
@@ -144,24 +141,21 @@ Brief one-sentence summary of what this meeting was about.
 - attended [[Jordan Rivera]]
 - with [[NovaTech]]
 - discussed [[Federated Learning]]
-- follow_up [[Send NovaTech Technical Spec]]`
-})
+- follow_up [[Send NovaTech Technical Spec]]
+"""
+)
 ```
 
 ### Document / Article Note
 
-```typescript
-write_note({
-  title: "Edge Computing Architecture Whitepaper",
-  folder: "references",
-  content: `---
-title: Edge Computing Architecture Whitepaper
-type: reference
-tags: [edge-computing, architecture, reference]
-source: https://example.com/whitepaper.pdf
-date_ingested: 2026-02-22
----
-
+```python
+write_note(
+  title="Edge Computing Architecture Whitepaper",
+  directory="references",
+  note_type="reference",
+  tags=["edge-computing", "architecture", "reference"],
+  metadata={"source": "https://example.com/whitepaper.pdf", "date_ingested": "2026-02-22"},
+  content="""
 # Edge Computing Architecture Whitepaper
 
 ## Source Content
@@ -174,8 +168,9 @@ date_ingested: 2026-02-22
 
 ## Relations
 - relates_to [[Edge Computing]]
-- relates_to [[Model Optimization]]`
-})
+- relates_to [[Model Optimization]]
+"""
+)
 ```
 
 ### Observation Categories
@@ -203,16 +198,13 @@ For each entity the user approved, create a structured note. Match the entity ty
 
 ### Person
 
-```typescript
-write_note({
-  title: "Jordan Rivera",
-  folder: "people",
-  content: `---
-title: Jordan Rivera
-type: person
-tags: [person, novatech, engineering]
----
-
+```python
+write_note(
+  title="Jordan Rivera",
+  directory="people",
+  note_type="person",
+  tags=["person", "novatech", "engineering"],
+  content="""
 # Jordan Rivera
 
 ## Overview
@@ -228,22 +220,20 @@ VP of Engineering at NovaTech. Met during integration partnership discussion.
 
 ## Relations
 - works_at [[NovaTech]]
-- discussed_in [[NovaTech Meeting - Jordan Rivera - Feb 22, 2026]]`
-})
+- discussed_in [[NovaTech Meeting - Jordan Rivera - Feb 22, 2026]]
+"""
+)
 ```
 
 ### Organization
 
-```typescript
-write_note({
-  title: "NovaTech",
-  folder: "organizations",
-  content: `---
-title: NovaTech
-type: organization
-tags: [organization, saas, integration-partner]
----
-
+```python
+write_note(
+  title="NovaTech",
+  directory="organizations",
+  note_type="organization",
+  tags=["organization", "saas", "integration-partner"],
+  content="""
 # NovaTech
 
 ## Overview
@@ -260,22 +250,20 @@ SaaS platform company. Series B stage.
 
 ## Relations
 - employs [[Jordan Rivera]]
-- discussed_in [[NovaTech Meeting - Jordan Rivera - Feb 22, 2026]]`
-})
+- discussed_in [[NovaTech Meeting - Jordan Rivera - Feb 22, 2026]]
+"""
+)
 ```
 
 ### Concept / Topic
 
-```typescript
-write_note({
-  title: "Federated Learning",
-  folder: "concepts",
-  content: `---
-title: Federated Learning
-type: concept
-tags: [concept, machine-learning, distributed-systems]
----
-
+```python
+write_note(
+  title="Federated Learning",
+  directory="concepts",
+  note_type="concept",
+  tags=["concept", "machine-learning", "distributed-systems"],
+  content="""
 # Federated Learning
 
 ## Overview
@@ -286,11 +274,12 @@ tags: [concept, machine-learning, distributed-systems]
 - [relevance] Core technique discussed in NovaTech integration
 
 ## Relations
-- discussed_in [[NovaTech Meeting - Jordan Rivera - Feb 22, 2026]]`
-})
+- discussed_in [[NovaTech Meeting - Jordan Rivera - Feb 22, 2026]]
+"""
+)
 ```
 
-Adapt templates to your domain. The key elements are: frontmatter with type/tags, an overview section, observations with categories, and relations linking back to the source.
+Adapt templates to your domain. The key elements are: type and tags as parameters, an overview section, observations with categories, and relations linking back to the source.
 
 ## Step 8: Extract Action Items
 
@@ -317,4 +306,4 @@ If using the **memory-tasks** skill, create Task notes for your action items. Ot
 - **Be selective about entities.** Not every name mentioned deserves its own note. Focus on entities the user will want to reference again.
 - **Use hedging for researched info.** Web research supplements — don't present it as fact. "Appears to be", "estimated", "based on public information".
 - **Link everything back.** Every created entity should relate back to the source note. The source note should link to all entities discussed.
-- **Observations over prose.** Categorized observations are searchable. A paragraph summarizing the meeting is not.
+- **Prose and observations together.** Notes work best with both narrative context and structured observations. Prose gives meaning and tells the story; observations make individual facts searchable. Use the body for context, then distill key facts into categorized observations.

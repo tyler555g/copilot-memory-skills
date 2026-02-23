@@ -110,12 +110,12 @@ settings:
 
 Look for clusters of notes that share structure but have no schema:
 
-1. **Search by type**: `search_notes({ query: "type:Meeting" })` — if many notes share a `type` but no `schema/Meeting.md` exists, it's a candidate.
+1. **Search by type**: `search_notes(query="type:Meeting")` — if many notes share a `type` but no `schema/Meeting.md` exists, it's a candidate.
 
 2. **Infer a schema**: Use `schema_infer` to analyze existing notes and generate a suggested schema:
-   ```typescript
-   schema_infer({ noteType: "Meeting" })
-   schema_infer({ noteType: "Meeting", threshold: 0.5 })  // fields in 50%+ of notes
+   ```python
+   schema_infer(noteType="Meeting")
+   schema_infer(noteType="Meeting", threshold=0.5)  # fields in 50%+ of notes
    ```
    The threshold (0.0–1.0) controls how common a field must be to be included. Default is usually fine; lower it to catch rarer fields.
 
@@ -125,53 +125,51 @@ Look for clusters of notes that share structure but have no schema:
 
 Write the schema note to `schema/<EntityName>`:
 
-```typescript
-write_note({
-  title: "Meeting",
-  folder: "schema",
-  content: `---
-title: Meeting
-type: schema
-entity: Meeting
-version: 1
-schema:
-  topic: string, what was discussed
-  date: string, when it happened
-  attendees?(array): Person, who attended
-  decisions?(array): string, decisions made
-settings:
-  validation: warn
----
-
-# Meeting
+```python
+write_note(
+  title="Meeting",
+  directory="schema",
+  note_type="schema",
+  metadata={
+    "entity": "Meeting",
+    "version": 1,
+    "schema": {
+      "topic": "string, what was discussed",
+      "date": "string, when it happened",
+      "attendees?(array)": "Person, who attended",
+      "decisions?(array)": "string, decisions made"
+    },
+    "settings": {"validation": "warn"}
+  },
+  content="""# Meeting
 
 Schema for meeting notes.
 
 ## Observations
 - [convention] Meeting notes live in memory/meetings/ or as daily entries
 - [convention] Always include date and topic
-- [convention] Action items should become tasks when complex`
-})
+- [convention] Action items should become tasks when complex"""
+)
 ```
 
 ### Key Principles
 
 - **Schema notes live in `schema/`** — one note per entity type
-- **`type: schema`** in frontmatter marks it as a schema definition
-- **`entity: Meeting`** names the type it applies to
-- **`version: 1`** — increment when making breaking changes
+- **`note_type="schema"`** marks it as a schema definition
+- **`entity: Meeting`** in metadata names the type it applies to
+- **`version: 1`** in metadata — increment when making breaking changes
 - **`settings.validation: warn`** is recommended to start — it logs issues without blocking writes
 
 ## Validating Notes
 
 Check how well existing notes conform to their schema:
 
-```typescript
-// Validate all notes of a type
-schema_validate({ noteType: "Meeting" })
+```python
+# Validate all notes of a type
+schema_validate(noteType="Meeting")
 
-// Validate a single note
-schema_validate({ identifier: "meetings/2026-02-10-standup" })
+# Validate a single note
+schema_validate(identifier="meetings/2026-02-10-standup")
 ```
 
 Validation reports:
@@ -189,8 +187,8 @@ Validation reports:
 
 Over time, notes evolve and schemas lag behind. Use `schema_diff` to find divergence:
 
-```typescript
-schema_diff({ noteType: "Meeting" })
+```python
+schema_diff(noteType="Meeting")
 ```
 
 Diff reports:
@@ -202,19 +200,19 @@ Diff reports:
 
 When note structure changes:
 
-1. **Run diff** to see current state: `schema_diff({ noteType: "Meeting" })`
+1. **Run diff** to see current state: `schema_diff(noteType="Meeting")`
 2. **Update the schema note** via `edit_note`:
-   ```typescript
-   edit_note({
-     identifier: "schema/Meeting",
-     operation: "find_replace",
-     find_text: "version: 1",
-     content: "version: 2",
-     expected_replacements: 1
-   })
+   ```python
+   edit_note(
+     identifier="schema/Meeting",
+     operation="find_replace",
+     find_text="version: 1",
+     content="version: 2",
+     expected_replacements=1
+   )
    ```
 3. **Add/remove/modify fields** in the `schema:` block
-4. **Re-validate** to confirm existing notes still pass: `schema_validate({ noteType: "Meeting" })`
+4. **Re-validate** to confirm existing notes still pass: `schema_validate(noteType="Meeting")`
 5. **Fix outliers** — update notes that don't conform to the new schema
 
 ### Evolution Guidelines

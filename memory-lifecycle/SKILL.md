@@ -76,9 +76,9 @@ When the user mentions completion or status change, extract the intent:
 
 Search Basic Memory with multiple variations to locate the entity:
 
-```typescript
-search_notes({ query: "quarterly report" })
-search_notes({ query: "Q1 report" })
+```python
+search_notes(query="quarterly report")
+search_notes(query="Q1 report")
 ```
 
 If multiple matches come back, present options and ask which one.
@@ -89,11 +89,11 @@ If no match is found, ask for clarification — don't guess.
 
 Use `move_note` to relocate the entity to the appropriate status folder:
 
-```typescript
-move_note({
-  identifier: "tasks/active/quarterly-report",
-  destination_path: "tasks/completed/quarterly-report.md"
-})
+```python
+move_note(
+  identifier="tasks/active/quarterly-report",
+  destination_path="tasks/completed/quarterly-report.md"
+)
 ```
 
 The permalink stays the same, so all existing `[[wiki-links]]` and `memory://` URLs continue to resolve.
@@ -102,24 +102,24 @@ The permalink stays the same, so all existing `[[wiki-links]]` and `memory://` U
 
 After moving, update the status in frontmatter to match:
 
-```typescript
-edit_note({
-  identifier: "quarterly-report",
-  operation: "find_replace",
-  find_text: "status: active",
-  content: "status: completed"
-})
+```python
+edit_note(
+  identifier="quarterly-report",
+  operation="find_replace",
+  find_text="status: active",
+  content="status: completed"
+)
 ```
 
 If there's a completion date field, set it:
 
-```typescript
-edit_note({
-  identifier: "quarterly-report",
-  operation: "find_replace",
-  find_text: "completed:",
-  content: "completed: 2026-02-22"
-})
+```python
+edit_note(
+  identifier="quarterly-report",
+  operation="find_replace",
+  find_text="completed:",
+  content="completed: 2026-02-22"
+)
 ```
 
 ### 4. Confirm
@@ -148,18 +148,18 @@ Sometimes only part of an entity is done. Don't move it — instead, update obse
 
 If something was archived by mistake, move it back:
 
-```typescript
-move_note({
-  identifier: "tasks/completed/quarterly-report",
-  destination_path: "tasks/active/quarterly-report.md"
-})
+```python
+move_note(
+  identifier="tasks/completed/quarterly-report",
+  destination_path="tasks/active/quarterly-report.md"
+)
 
-edit_note({
-  identifier: "quarterly-report",
-  operation: "find_replace",
-  find_text: "status: completed",
-  content: "status: active"
-})
+edit_note(
+  identifier="quarterly-report",
+  operation="find_replace",
+  find_text="status: completed",
+  content="status: active"
+)
 ```
 
 ### Status Without Movement

@@ -91,20 +91,20 @@ Metadata-only search. Results are scoped to entity-level items.
 
 ```python
 # All notes with status "in-progress"
-search_by_metadata({"status": "in-progress"})
+search_by_metadata(filters={"status": "in-progress"})
 
 # High-priority specs in a specific project
 search_by_metadata(
-    {"type": "spec", "priority": {"$in": ["high", "critical"]}},
+    filters={"type": "spec", "priority": {"$in": ["high", "critical"]}},
     project="research",
     limit=10,
 )
 
 # Notes with confidence above a threshold
-search_by_metadata({"confidence": {"$gt": 0.7}})
+search_by_metadata(filters={"confidence": {"$gt": 0.7}})
 
 # Paginate through results
-search_by_metadata({"type": "meeting"}, limit=10, offset=20)
+search_by_metadata(filters={"type": "meeting"}, limit=10, offset=20)
 ```
 
 ## Using `search_notes` with Metadata
@@ -173,13 +173,13 @@ Queries that find it:
 
 ```python
 # By status and type
-search_by_metadata({"status": "in-progress", "type": "spec"})
+search_by_metadata(filters={"status": "in-progress", "type": "spec"})
 
 # By numeric threshold
-search_by_metadata({"confidence": {"$gt": 0.7}})
+search_by_metadata(filters={"confidence": {"$gt": 0.7}})
 
 # By priority set
-search_by_metadata({"priority": {"$in": ["high", "critical"]}})
+search_by_metadata(filters={"priority": {"$in": ["high", "critical"]}})
 
 # By tag shorthand
 search_notes("tag:security")
