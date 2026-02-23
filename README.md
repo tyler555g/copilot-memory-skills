@@ -1,6 +1,12 @@
 # basic-memory-skills
 
-OpenClaw skills for AI memory management. Works with [Basic Memory](https://github.com/basicmachines-co/basic-memory) and the [`@openclaw/basic-memory`](https://github.com/basicmachines-co/openclaw-basic-memory) plugin.
+Skills for [Basic Memory](https://github.com/basicmachines-co/basic-memory) — teach AI coding agents how to use Basic Memory's MCP tools effectively.
+
+## What Are Skills?
+
+Skills are markdown instruction files (`SKILL.md`) that AI agents load for domain-specific guidance. Each skill contains structured knowledge about *when* and *how* to use specific tools, with examples and best practices.
+
+Basic Memory provides the MCP server — tools like `write_note`, `search_notes`, and `build_context` for managing a local-first knowledge graph. These skills teach agents how to use those tools well: when to create tasks vs. notes, how to structure observations for searchability, when to run schema validation, and more.
 
 ## Skills
 
@@ -62,11 +68,7 @@ Web research synthesized into Basic Memory entities. Researches a subject using 
 
 ## Installation
 
-### Bundled with the plugin (recommended)
-
-If you use the [`@openclaw/basic-memory`](https://github.com/basicmachines-co/openclaw-basic-memory) plugin, all 9 skills are bundled automatically — no extra install step needed.
-
-### Via npx skills
+### Via npx skills (recommended)
 
 Install or update skills using the [Skills CLI](https://github.com/vercel-labs/skills):
 
@@ -94,29 +96,37 @@ Skills are installed to your agent's skills directory (e.g., `~/.claude/skills/`
 
 ### Manual install
 
+Copy skill directories into your agent's skills folder:
+
 ```bash
-cp -r memory-tasks ~/.openclaw/skills/
-cp -r memory-notes ~/.openclaw/skills/
-cp -r memory-reflect ~/.openclaw/skills/
-cp -r memory-defrag ~/.openclaw/skills/
-cp -r memory-schema ~/.openclaw/skills/
-cp -r memory-metadata-search ~/.openclaw/skills/
-cp -r memory-lifecycle ~/.openclaw/skills/
-cp -r memory-ingest ~/.openclaw/skills/
-cp -r memory-research ~/.openclaw/skills/
+# Claude Code — global
+cp -r memory-tasks ~/.claude/skills/
+cp -r memory-notes ~/.claude/skills/
+# ... etc.
+
+# Claude Code — project-scoped
+cp -r memory-tasks .claude/skills/
+
+# Any agent that reads SKILL.md files
+cp -r memory-tasks <agent-skills-dir>/
 ```
 
-Use `~/.openclaw/skills/` for global (shared across workspaces) or `skills/` in your project directory for project-scoped.
+### Bundled with OpenClaw plugin
 
-## Works With
+All 9 skills are also bundled in the [`@openclaw/basic-memory`](https://github.com/basicmachines-co/openclaw-basic-memory) plugin — no extra install step needed if you use OpenClaw.
 
-- **Basic Memory plugin** — full knowledge graph search + schema validation + indexing
-- **Plain OpenClaw** — works with native memory files (MEMORY.md, memory/)
-- **Any markdown-based memory** — skills operate on plain text files
+## Compatible Agents
+
+These skills work with any AI coding agent that supports the SKILL.md format:
+
+- **Claude Code** — loads skills from `~/.claude/skills/` or `.claude/skills/`
+- **Cursor** — AI-powered coding with skill support
+- **Windsurf** — agent-based development with skill loading
+- **Any agent** supporting markdown-based skill files
 
 ## Development
 
-See [DEVELOPMENT.md](./DEVELOPMENT.md) for testing and plugin integration details.
+See [DEVELOPMENT.md](./DEVELOPMENT.md) for testing and contribution details.
 
 ## License
 

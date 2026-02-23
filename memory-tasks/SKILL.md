@@ -58,7 +58,7 @@ current_step: 1
 ## Observations
 - [description] What needs to be done, concisely
 - [status] active
-- [assigned_to] claw
+- [assigned_to] claude
 - [started] YYYY-MM-DD
 - [current_step] 1
 
@@ -145,12 +145,10 @@ With BM's schema system, tasks are fully queryable:
 | `search_notes("type:Task")` | All tasks |
 | `search_notes("[status] active")` | Active tasks |
 | `search_notes("[status] blocked")` | Blocked tasks |
-| `search_notes("[assigned_to] claw")` | My tasks |
+| `search_notes("[assigned_to] claude")` | My tasks |
 | `search_notes("type:Task [blockers]")` | Tasks with blockers |
-| `bm_schema_validate({ noteType: "Task" })` | Validate all tasks against schema |
-| `bm_schema_diff({ noteType: "Task" })` | Detect drift between schema and actual task notes |
-
-> **Plugin tools vs BM CLI**: The `bm_schema_validate`, `bm_schema_infer`, and `bm_schema_diff` tools are available when using the `@openclaw/basic-memory` plugin. The raw `search_notes(...)` queries also work and are useful for ad-hoc filtering. `memory_search` composites results from all sources including active task scanning.
+| `schema_validate({ noteType: "Task" })` | Validate all tasks against schema |
+| `schema_diff({ noteType: "Task" })` | Detect drift between schema and actual task notes |
 
 ## Guidelines
 

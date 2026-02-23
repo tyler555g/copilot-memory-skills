@@ -110,12 +110,12 @@ settings:
 
 Look for clusters of notes that share structure but have no schema:
 
-1. **Search by type**: `bm_search({ query: "type:Meeting" })` — if many notes share a `type` but no `schema/Meeting.md` exists, it's a candidate.
+1. **Search by type**: `search_notes({ query: "type:Meeting" })` — if many notes share a `type` but no `schema/Meeting.md` exists, it's a candidate.
 
-2. **Infer a schema**: Use `bm_schema_infer` to analyze existing notes and generate a suggested schema:
+2. **Infer a schema**: Use `schema_infer` to analyze existing notes and generate a suggested schema:
    ```typescript
-   bm_schema_infer({ noteType: "Meeting" })
-   bm_schema_infer({ noteType: "Meeting", threshold: 0.5 })  // fields in 50%+ of notes
+   schema_infer({ noteType: "Meeting" })
+   schema_infer({ noteType: "Meeting", threshold: 0.5 })  // fields in 50%+ of notes
    ```
    The threshold (0.0–1.0) controls how common a field must be to be included. Default is usually fine; lower it to catch rarer fields.
 
@@ -126,7 +126,7 @@ Look for clusters of notes that share structure but have no schema:
 Write the schema note to `schema/<EntityName>`:
 
 ```typescript
-bm_write({
+write_note({
   title: "Meeting",
   folder: "schema",
   content: `---
@@ -168,10 +168,10 @@ Check how well existing notes conform to their schema:
 
 ```typescript
 // Validate all notes of a type
-bm_schema_validate({ noteType: "Meeting" })
+schema_validate({ noteType: "Meeting" })
 
 // Validate a single note
-bm_schema_validate({ identifier: "meetings/2026-02-10-standup" })
+schema_validate({ identifier: "meetings/2026-02-10-standup" })
 ```
 
 Validation reports:
@@ -187,10 +187,10 @@ Validation reports:
 
 ## Detecting Drift
 
-Over time, notes evolve and schemas lag behind. Use `bm_schema_diff` to find divergence:
+Over time, notes evolve and schemas lag behind. Use `schema_diff` to find divergence:
 
 ```typescript
-bm_schema_diff({ noteType: "Meeting" })
+schema_diff({ noteType: "Meeting" })
 ```
 
 Diff reports:
@@ -202,10 +202,10 @@ Diff reports:
 
 When note structure changes:
 
-1. **Run diff** to see current state: `bm_schema_diff({ noteType: "Meeting" })`
-2. **Update the schema note** via `bm_edit`:
+1. **Run diff** to see current state: `schema_diff({ noteType: "Meeting" })`
+2. **Update the schema note** via `edit_note`:
    ```typescript
-   bm_edit({
+   edit_note({
      identifier: "schema/Meeting",
      operation: "find_replace",
      find_text: "version: 1",
@@ -214,7 +214,7 @@ When note structure changes:
    })
    ```
 3. **Add/remove/modify fields** in the `schema:` block
-4. **Re-validate** to confirm existing notes still pass: `bm_schema_validate({ noteType: "Meeting" })`
+4. **Re-validate** to confirm existing notes still pass: `schema_validate({ noteType: "Meeting" })`
 5. **Fix outliers** — update notes that don't conform to the new schema
 
 ### Evolution Guidelines
@@ -228,10 +228,10 @@ When note structure changes:
 ## Workflow Summary
 
 ```
-1. Notice repeated note structure → infer schema (bm_schema_infer)
-2. Review + create schema note   → write to schema/ (bm_write)
-3. Validate existing notes       → check conformance (bm_schema_validate)
-4. Fix outliers                  → edit non-conforming notes (bm_edit)
-5. Periodically check drift      → detect divergence (bm_schema_diff)
-6. Evolve schema as needed       → update schema note (bm_edit)
+1. Notice repeated note structure → infer schema (schema_infer)
+2. Review + create schema note   → write to schema/ (write_note)
+3. Validate existing notes       → check conformance (schema_validate)
+4. Fix outliers                  → edit non-conforming notes (edit_note)
+5. Periodically check drift      → detect divergence (schema_diff)
+6. Evolve schema as needed       → update schema note (edit_note)
 ```

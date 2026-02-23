@@ -140,7 +140,7 @@ These create `references` relations automatically. Use the Relations section for
 
 - **Link liberally.** Relations are what turn isolated notes into a knowledge graph. When in doubt, add the link.
 - **Create target notes if they don't exist yet.** `[[Future Topic]]` is valid — BM will resolve it when that note is created.
-- **Use `build_context` to traverse.** `bm_build_context({ url: "memory://note-title" })` follows relations to gather connected knowledge.
+- **Use `build_context` to traverse.** `build_context({ url: "memory://note-title" })` follows relations to gather connected knowledge.
 - **Custom relation types are fine.** `taught_by`, `blocks`, `tested_in` — use whatever is descriptive.
 
 ## Memory URLs
@@ -268,7 +268,7 @@ Context about the API design process.
 
 ### Editing an Existing Note
 
-Use `bm_edit` to append, prepend, or find-and-replace within a note:
+Use `edit_note` to append, prepend, or find-and-replace within a note:
 
 ```typescript
 // Append new observations
@@ -294,7 +294,7 @@ edit_note({
 
 2. **Observations over prose.** Categorized observations are searchable and structured. A paragraph of text is not. Prefer `[decision] X because Y` over burying the same fact in a paragraph.
 
-3. **Build incrementally.** Add to existing notes rather than creating duplicates. Use `bm_edit` to append new observations or relations as you learn more.
+3. **Build incrementally.** Add to existing notes rather than creating duplicates. Use `edit_note` to append new observations or relations as you learn more.
 
 4. **Review AI-generated content.** When an AI writes notes for you, review them for accuracy. The AI captures structure well but may miss nuance.
 
