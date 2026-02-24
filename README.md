@@ -10,61 +10,17 @@ Basic Memory provides the MCP server — tools like `write_note`, `search_notes`
 
 ## Skills
 
-### memory-tasks
-
-Structured task tracking that survives context compaction. Creates typed `Task` notes with steps, status, and context — queryable via the BM knowledge graph and validatable against a Picoschema definition.
-
-**When to use:** Multi-step work (3+ steps), anything that might outlast a context window, or after compaction to resume.
-
-### memory-schema
-
-Schema lifecycle management for Basic Memory. Covers discovering unschemaed notes, inferring schemas, creating/editing definitions, validating notes, and detecting drift.
-
-**When to use:** When structured note types emerge (Task, Person, Meeting, etc.) and you want consistency across the knowledge graph.
-
-### memory-reflect
-
-Sleep-time memory reflection. Reviews recent conversations and daily notes, extracts insights, and consolidates into long-term memory.
-
-Inspired by [sleep-time compute](https://www.letta.com/blog/sleep-time-compute) — memory formation works best *between* active sessions, not during them.
-
-**When to use:** Schedule via cron (1-2x daily), trigger from heartbeat, or run on demand.
-
-### memory-notes
-
-How to write well-structured Basic Memory notes. Covers frontmatter, observations with semantic categories, relations with wiki-links, inline references, memory URLs, and best practices for building a rich knowledge graph.
-
-**When to use:** When creating or improving notes, or when you need a reference for the note format.
-
-### memory-metadata-search
-
-Structured metadata search for Basic Memory. Query notes by custom frontmatter fields using equality, range, array, and nested filters instead of free-text content.
-
-**When to use:** When finding notes by status, priority, confidence, or any custom YAML field rather than free-text content.
-
-### memory-defrag
-
-Memory defragmentation. Reorganizes memory files: splits bloated ones, merges duplicates, removes stale information, restructures the hierarchy.
-
-**When to use:** Run weekly/biweekly via cron, or on demand when memory feels messy.
-
-### memory-lifecycle
-
-Entity lifecycle management. Handles status transitions through folder-based organization — archiving completed work, moving entities between status folders, updating frontmatter, and reverting mistakes. Core principle: archive, never delete.
-
-**When to use:** When marking items complete, archiving old entities, or managing any folder-based status workflow.
-
-### memory-ingest
-
-Process unstructured external input into structured Basic Memory entities. Parses meeting transcripts, conversation logs, and pasted documents — extracts entities, searches for existing matches, proposes new entities with approval, and captures action items.
-
-**When to use:** When pasting a meeting transcript, conversation log, or any external document that should become structured knowledge.
-
-### memory-research
-
-Web research synthesized into Basic Memory entities. Researches a subject using web search, checks for existing knowledge, presents structured findings, and creates an entity note with approval.
-
-**When to use:** When asked to research a company, person, technology, or topic — or when a bare name or URL implies a research request.
+| Skill | Description | When to use |
+|-------|-------------|-------------|
+| **memory-tasks** | Structured task tracking that survives context compaction. Creates typed `Task` notes with steps, status, and context. | Multi-step work (3+ steps), anything that might outlast a context window, or after compaction to resume. |
+| **memory-schema** | Schema lifecycle management — discover unschemaed notes, infer schemas, create/edit definitions, validate, and detect drift. | When structured note types emerge (Task, Person, Meeting, etc.) and you want consistency. |
+| **memory-reflect** | Sleep-time memory reflection. Reviews recent conversations and daily notes, extracts insights, consolidates into long-term memory. Inspired by [sleep-time compute](https://www.letta.com/blog/sleep-time-compute). | Schedule via cron (1-2x daily), trigger from heartbeat, or run on demand. |
+| **memory-notes** | How to write well-structured notes — frontmatter, observations with semantic categories, relations with wiki-links, and best practices. | When creating or improving notes, or when you need a reference for the note format. |
+| **memory-metadata-search** | Structured metadata search — query notes by custom frontmatter fields using equality, range, array, and nested filters. | When finding notes by status, priority, confidence, or any custom YAML field. |
+| **memory-defrag** | Memory defragmentation — split bloated files, merge duplicates, remove stale information, restructure the hierarchy. | Run weekly/biweekly via cron, or on demand when memory feels messy. |
+| **memory-lifecycle** | Entity lifecycle management — status transitions through folder-based organization, archiving completed work. Core principle: archive, never delete. | When marking items complete, archiving old entities, or managing folder-based status workflows. |
+| **memory-ingest** | Process unstructured external input into structured entities. Parses meeting transcripts, conversation logs, and pasted documents. | When pasting a transcript, conversation log, or external document that should become structured knowledge. |
+| **memory-research** | Web research synthesized into Basic Memory entities. Researches a subject, checks for existing knowledge, presents findings, and creates entity notes. | When asked to research a company, person, technology, or topic. |
 
 ## Basic Memory Cloud
 
