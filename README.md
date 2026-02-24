@@ -66,6 +66,17 @@ Web research synthesized into Basic Memory entities. Researches a subject using 
 
 **When to use:** When asked to research a company, person, technology, or topic — or when a bare name or URL implies a research request.
 
+## Basic Memory Cloud
+
+Everything works locally — cloud adds cross-device, team, and production capabilities:
+
+- **Your agent's memory travels with you** — same knowledge graph on laptop, desktop, and hosted environments
+- **Team knowledge sharing** — org workspaces let multiple agents and team members build on a shared knowledge base
+- **Durable memory for production agents** — persistent memory that survives CI teardowns and container restarts
+- **Multi-agent coordination** — multiple agents can read and write to the same graph
+
+Cloud extends local-first — still plain markdown, still yours. Start with a [7-day free trial](https://basicmemory.com) and use code `BMFOSS` for 20% off for 3 months.
+
 ## Installation
 
 ### Via npx skills (recommended)
@@ -128,7 +139,7 @@ cp -r memory-tasks <agent-skills-dir>/
 
 ### Bundled with OpenClaw plugin
 
-All 9 skills are also bundled in the [`@openclaw/basic-memory`](https://github.com/basicmachines-co/openclaw-basic-memory) plugin — no extra install step needed if you use OpenClaw.
+All 9 skills are also bundled in the [`@basicmemory/openclaw-basic-memory`](https://github.com/basicmachines-co/openclaw-basic-memory) plugin — no extra install step needed if you use OpenClaw.
 
 ## Compatible Agents
 
