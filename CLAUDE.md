@@ -55,4 +55,4 @@ description: "What the skill does and when to use it."
 - **Relations**: Wiki-links creating graph edges — `- relation_type [[Target Note]]`
 - **Schema / Picoschema**: Compact YAML definitions for note structure validation
 - **Memory URLs**: `memory://path-to-note` for programmatic access
-- **MCP Tools**: `write_note`, `read_note`, `edit_note`, `move_note`, `delete_note`, `search_notes`, `search_by_metadata`, `build_context`, `schema_validate`, `schema_infer`, `schema_diff`
+- **MCP Tools**: `write_note`, `read_note`, `edit_note`, `move_note`, `delete_note`, `search_notes`, `build_context`, `schema_validate`, `schema_infer`, `schema_diff`

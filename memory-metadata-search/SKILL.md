@@ -16,14 +16,9 @@ Find notes by their structured frontmatter fields instead of (or in addition to)
 - **Tag-based filtering** — find notes tagged with specific frontmatter tags
 - **Schema-aware queries** — filter by nested schema fields using dot notation
 
-## Two Tools, Two Patterns
+## The Tool
 
-| Tool | Use When |
-|------|----------|
-| `search_by_metadata` | Metadata filters only, no text query needed |
-| `search_notes` | Combining a text query with metadata filters |
-
-Both accept the same filter syntax.
+All metadata searching uses `search_notes`. Pass filters via `metadata_filters`, or use the `tags` and `status` convenience shortcuts. Omit `query` (or pass `None`) for filter-only searches.
 
 ## Filter Syntax
 
@@ -85,42 +80,30 @@ Numeric values use numeric comparison; strings use lexicographic comparison.
 - `$in` and array-contains require non-empty lists
 - `$between` requires exactly `[min, max]`
 
-## Using `search_by_metadata`
-
-Metadata-only search. Results are scoped to entity-level items.
-
-```python
-# All notes with status "in-progress"
-search_by_metadata(filters={"status": "in-progress"})
-
-# High-priority specs in a specific project
-search_by_metadata(
-    filters={"type": "spec", "priority": {"$in": ["high", "critical"]}},
-    project="research",
-    limit=10,
-)
-
-# Notes with confidence above a threshold
-search_by_metadata(filters={"confidence": {"$gt": 0.7}})
-
-# Paginate through results
-search_by_metadata(filters={"type": "meeting"}, limit=10, offset=20)
-```
-
 ## Using `search_notes` with Metadata
 
-Combine text search with structured filters by passing `metadata_filters`, `tags`, or `status` alongside the text `query`.
+Pass `metadata_filters`, `tags`, or `status` to `search_notes`. Omit `query` for filter-only searches, or combine text and filters together.
 
 ```python
-# Text search narrowed by metadata
-search_notes("authentication", metadata_filters={"status": "draft"})
+# Filter-only — find all notes with a given status
+search_notes(metadata_filters={"status": "in-progress"})
 
-# Filter-only (empty query string)
-search_notes("", metadata_filters={"type": "spec"})
+# Filter-only — high-priority specs in a specific project
+search_notes(
+    metadata_filters={"type": "spec", "priority": {"$in": ["high", "critical"]}},
+    project="research",
+    page_size=10,
+)
+
+# Filter-only — notes with confidence above a threshold
+search_notes(metadata_filters={"confidence": {"$gt": 0.7}})
 
 # Convenience shortcuts for tags and status
-search_notes("planning", status="active")
-search_notes("", tags=["security", "oauth"])
+search_notes(status="active")
+search_notes(tags=["security", "oauth"])
+
+# Text search narrowed by metadata
+search_notes("authentication", metadata_filters={"status": "draft"})
 
 # Mix text, tag shortcut, and advanced filter
 search_notes(
@@ -173,13 +156,13 @@ Queries that find it:
 
 ```python
 # By status and type
-search_by_metadata(filters={"status": "in-progress", "type": "spec"})
+search_notes(metadata_filters={"status": "in-progress", "type": "spec"})
 
 # By numeric threshold
-search_by_metadata(filters={"confidence": {"$gt": 0.7}})
+search_notes(metadata_filters={"confidence": {"$gt": 0.7}})
 
 # By priority set
-search_by_metadata(filters={"priority": {"$in": ["high", "critical"]}})
+search_notes(metadata_filters={"priority": {"$in": ["high", "critical"]}})
 
 # By tag shorthand
 search_notes("tag:security")
@@ -194,6 +177,6 @@ search_notes("OAuth", metadata_filters={"status": "in-progress"})
 - **Use text search for content queries.** If you're looking for notes *about* something, text search is better. Combine both when you need precision.
 - **Custom fields are free.** Any YAML key you put in frontmatter becomes queryable — no schema or configuration required.
 - **Multiple filters are AND.** `{"status": "active", "priority": "high"}` requires both conditions.
-- **Prefer `search_by_metadata` for filter-only queries.** It's purpose-built and returns entity-level results. Use `search_notes` with empty query only when you also need text search features.
+- **Omit `query` for filter-only searches.** `search_notes(metadata_filters={"status": "active"})` works without a text query.
 - **Dot notation for nesting.** Access nested YAML structures with dots: `{"schema.version": "2"}` queries the `version` key inside a `schema` object.
 - **Tags shortcut is convenient but limited.** `tags` and `status` are sugar for common fields. For anything else, use `metadata_filters` directly.

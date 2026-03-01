@@ -78,7 +78,6 @@ After changes:
 
 ## Guidelines
 
-- **Back up first.** If git is available, commit before defragging. If not, note the pre-defrag state.
 - **Preserve raw daily notes.** Don't delete or modify `memory/YYYY-MM-DD.md` files — they're the audit trail.
 - **Target 15-25 focused files.** Too few means bloated files; too many means fragmentation. Aim for the sweet spot.
 - **File names should be scannable.** Use descriptive names: `people.md`, `project-status.md`, `competitive-landscape.md` — not `notes-2.md`.
