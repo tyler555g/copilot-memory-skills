@@ -19,10 +19,20 @@ Inspired by sleep-time compute — the idea that memory formation happens best *
 
 ### 1. Gather Recent Material
 
-Read the last 2-3 days of daily notes from `memory/YYYY-MM-DD.md`. Also check:
-- Recent conversation transcripts (if accessible)
-- Any files modified in `memory/` in the last 48 hours
-- Active tasks in `memory/tasks/`
+Find what changed recently, then read the relevant files:
+
+```python
+# Find recently modified notes — use json format for the complete list
+# (text format truncates to ~5 items in the summary)
+recent_activity(timeframe="2d", output_format="json")
+
+# Read specific daily notes
+read_note(identifier="memory/2026-02-27")
+read_note(identifier="memory/2026-02-26")
+
+# Check active tasks
+search_notes(note_types=["task"], status="active")
+```
 
 ### 2. Evaluate What Matters
 

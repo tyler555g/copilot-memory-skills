@@ -172,8 +172,10 @@ schema_validate(noteType="Meeting")
 schema_validate(identifier="meetings/2026-02-10-standup")
 ```
 
+**Important:** `schema_validate` checks for schema fields as **observation categories** in the note body — e.g., a `status` field expects `- [status] active` as an observation. Fields stored only in frontmatter metadata won't satisfy validation. To pass cleanly, include schema fields as both frontmatter values (for metadata search) and observations (for schema validation).
+
 Validation reports:
-- **Missing required fields** — the note lacks a field the schema requires
+- **Missing required fields** — the note lacks a field the schema requires (as an observation category)
 - **Unknown fields** — the note has fields the schema doesn't define
 - **Type mismatches** — a field value doesn't match the expected type
 - **Invalid enum values** — a value isn't in the allowed set

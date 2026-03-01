@@ -42,24 +42,26 @@ settings:
 
 ## Creating a Task
 
-When work qualifies, create a note in `memory/tasks/YYYY-MM-DD-short-name.md`:
+When work qualifies, create a task note. Use `write_note` with `note_type="Task"` and put queryable fields in `metadata`:
 
-```markdown
----
-title: Descriptive task name
-type: Task
-status: active
-created: YYYY-MM-DD
-current_step: 1
----
-
-# Descriptive task name
+```python
+write_note(
+  title="Descriptive task name",
+  directory="tasks",
+  note_type="Task",
+  metadata={
+    "status": "active",
+    "priority": "high",
+    "current_step": 1,
+    "steps": ["First step", "Second step", "Third step"]
+  },
+  tags=["task"],
+  content="""# Descriptive task name
 
 ## Observations
 - [description] What needs to be done, concisely
 - [status] active
 - [assigned_to] claude
-- [started] YYYY-MM-DD
 - [current_step] 1
 
 ## Steps
@@ -72,23 +74,27 @@ What future-you needs to pick up this work. Include:
 - Key file paths and repos involved
 - Decisions already made and why
 - What was tried and what worked/didn't
-- Where to look for related context
+- Where to look for related context"""
+)
 ```
+
+**Why both frontmatter and observations?** Fields in `metadata` (stored as frontmatter) power `search_notes` with `metadata_filters`. Fields as observations (`- [status] active`) power `schema_validate`. Include queryable fields in both places for full coverage.
 
 ### Key Principles
 
 - **Steps are concrete and checkable** — "Implement X in file Y", not "figure out stuff"
 - **Context is for post-amnesia resumption** — Write it as if explaining to a smart person who knows nothing about what you've been doing
-- **Use observations for BM-queryable fields** — `[status]`, `[description]`, `[assigned_to]` etc. become searchable in the knowledge graph
 - **Relations link to other entities** — `parent_task [[Other Task]]`, `related_to [[Some Note]]`
+- **`note_types` is case-sensitive** — `write_note(note_type="Task")` stores the type as lowercase `task` in frontmatter. Use `note_types=["task"]` (lowercase) in search queries.
 
 ## Resuming After Compaction
 
 On session start or after compaction:
 
 1. **Search for active tasks:**
-   - Via BM: `search_notes("type:Task status:active")` or `search_notes("[status] active")`
-   - Via memory_search: query "active tasks" (composited search includes task scanning)
+   ```python
+   search_notes(note_types=["task"], status="active")
+   ```
 
 2. **Read the task note** to get full context
 
@@ -129,7 +135,7 @@ Add a brief summary of what was accomplished and any follow-up needed.
 
 When a compaction event is imminent:
 
-1. Find all active tasks: `search_notes("type:Task status:active")`
+1. Find all active tasks: `search_notes(note_types=["task"], status="active")`
 2. For each, update:
    - `current_step` to reflect actual progress
    - `context` with everything needed to resume
@@ -142,11 +148,11 @@ With BM's schema system, tasks are fully queryable:
 
 | Query | What it finds |
 |-------|--------------|
-| `search_notes("type:Task")` | All tasks |
-| `search_notes("[status] active")` | Active tasks |
-| `search_notes("[status] blocked")` | Blocked tasks |
-| `search_notes("[assigned_to] claude")` | My tasks |
-| `search_notes("type:Task [blockers]")` | Tasks with blockers |
+| `search_notes(note_types=["task"])` | All tasks |
+| `search_notes(note_types=["task"], status="active")` | Active tasks |
+| `search_notes(note_types=["task"], status="blocked")` | Blocked tasks |
+| `search_notes(note_types=["task"], metadata_filters={"assigned_to": "claude"})` | My tasks |
+| `search_notes("blockers", note_types=["task"])` | Tasks with blockers |
 | `schema_validate(noteType="Task")` | Validate all tasks against schema |
 | `schema_diff(noteType="Task")` | Detect drift between schema and actual task notes |
 
@@ -157,4 +163,4 @@ With BM's schema system, tasks are fully queryable:
 - **Context > steps** — Steps tell you what to do; context tells you why and how
 - **Close finished tasks** — Don't leave completed work as `active`
 - **Link related tasks** — Use `parent_task [[X]]` or relations to connect related work
-- **Schema validation is your friend** — Run `bm schema validate Task` periodically to catch incomplete tasks
+- **Schema validation is your friend** — Run `schema_validate(noteType="Task")` periodically to catch incomplete tasks
