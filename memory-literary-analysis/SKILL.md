@@ -31,12 +31,14 @@ Phase 5: Visualize     → canvas files for character webs, timelines
 ### Create the Project
 
 ```python
-create_memory_project(name="moby-dick", path="~/basic-memory/moby-dick")
+create_memory_project(name="<work-name>", path="~/basic-memory/<work-name>")
 ```
+
+Use a kebab-case slug of the work's title (e.g., `great-gatsby`, `hamlet`, `beloved`).
 
 ### Define Schemas
 
-Write 6 schema notes to `schema/`. Each schema defines the entity type's fields, observation categories, and relation types.
+Write 6 schema notes to `schema/`. Each schema defines the entity type's fields, observation categories, and relation types. Adapt fields to fit the work — the schemas below are starting points, not rigid templates.
 
 #### Character Schema
 
@@ -52,9 +54,7 @@ write_note(
       "role(enum)": "[protagonist, antagonist, supporting, minor], character's narrative role",
       "description": "string, brief character description",
       "first_appearance?": "string, chapter or scene of first appearance",
-      "status?(enum)": "[alive, dead, unknown], character status at end of work",
-      "rank?": "string, formal rank or title",
-      "crew_role?": "string, role aboard ship or in group"
+      "status?(enum)": "[alive, dead, unknown, transformed], character status at end of work"
     },
     "settings": {"validation": "warn"}
   },
@@ -68,6 +68,8 @@ Schema for character entity notes.
 - [convention] Relations: appears_in, contrasts_with, allied_with, commands, symbolizes, associated_with"""
 )
 ```
+
+Add work-specific fields as needed — e.g., `rank` for military fiction, `house` for family sagas, `species` for fantasy.
 
 #### Theme Schema
 
@@ -110,7 +112,7 @@ write_note(
       "chapter_number": "integer, sequential chapter number",
       "pov?": "string, point-of-view character or narrator mode",
       "setting?": "string, primary location",
-      "narrative_mode?(enum)": "[dramatic, expository, soliloquy, cetological, mixed], chapter's primary mode"
+      "narrative_mode?(enum)": "[dramatic, expository, reflective, epistolary, mixed], chapter's primary mode"
     },
     "settings": {"validation": "warn"}
   },
@@ -137,7 +139,7 @@ write_note(
     "version": 1,
     "schema": {
       "description": "string, what this place is",
-      "location_type(enum)": "[ship, town, building, body_of_water, region, fictional], type of place",
+      "location_type(enum)": "[city, building, landscape, body_of_water, region, fictional, vehicle], type of place",
       "real_or_fictional(enum)": "[real, fictional, both], whether the place exists"
     },
     "settings": {"validation": "warn"}
@@ -164,7 +166,7 @@ write_note(
     "version": 1,
     "schema": {
       "description": "string, what the symbol is literally",
-      "symbol_type(enum)": "[object, animal, color, action, natural_phenomenon], category of symbol",
+      "symbol_type(enum)": "[object, animal, color, action, natural_phenomenon, body_part], category of symbol",
       "primary_meaning": "string, most common interpretation"
     },
     "settings": {"validation": "warn"}
@@ -211,7 +213,7 @@ Schema for literary technique and device notes.
 ```
 <project>/
   schema/            # 6 schema definitions
-  chapters/          # one note per chapter + epilogue
+  chapters/          # one note per chapter/section + prologue/epilogue
   characters/
     major/           # protagonist, antagonist, key supporting
     minor/           # named characters with limited roles
@@ -233,32 +235,33 @@ For each major character, create a stub with known metadata:
 
 ```python
 write_note(
-  title="Captain Ahab",
+  title="<Character Name>",
   directory="characters/major",
   note_type="Character",
-  tags=["character", "major", "protagonist"],
-  metadata={"role": "protagonist", "description": "Captain of the Pequod, monomaniacally obsessed with the White Whale"},
-  content="""# Captain Ahab
+  tags=["character", "major", "<role>"],
+  metadata={"role": "<role>", "description": "<brief description>"},
+  content="""# <Character Name>
 
 ## Observations
-- [role] Captain of the Pequod, protagonist and tragic figure
-- [appearance] Scarred, one-legged, with a whalebone prosthetic
+- [role] <Character's role in the work>
+- [appearance] <Key physical description>
 
 ## Relations
-- commands [[The Pequod]]
-- hunts [[Moby Dick (White Whale)]]
-- contrasts_with [[Starbuck]]"""
+- associated_with [[<Related Character>]]
+- appears_in [[<Key Location>]]"""
 )
 ```
 
 ### Seed Checklist
 
-| Type | Count | Examples |
-|------|-------|---------|
-| Characters (major) | ~15 | Ishmael, Ahab, Queequeg, Starbuck, Stubb, Flask, Tashtego, Daggoo, Pip, Fedallah, Father Mapple, Bildad, Peleg, Elijah, Moby Dick |
-| Themes | ~10 | Obsession, Nature/Sublime, Fate/Free Will, Race/Class, Knowledge/Limits, Religion/Mythology, Revenge, Isolation, The Unknowable, Masculinity |
-| Locations | ~6-8 | The Pequod, Nantucket, New Bedford, Spouter-Inn, The Chapel, Pacific Ocean |
-| Symbols | ~6-8 | The White Whale, The Doubloon, The Coffin/Life-Buoy, Whiteness, The Try-Works, Queequeg's Tattoos |
+Identify the work's major entities before you start reading. A good starting inventory:
+
+| Type | Typical Count | What to Include |
+|------|--------------|-----------------|
+| Characters (major) | 8-20 | Protagonist, antagonist, key supporting cast |
+| Themes | 5-12 | Central concerns the work explores |
+| Locations | 4-10 | Primary settings, symbolically significant places |
+| Symbols | 4-10 | Recurring objects, images, or motifs with layered meaning |
 
 Stubs don't need to be complete — they give `[[wiki-link]]` targets and will be enriched during chapter processing.
 
@@ -266,79 +269,77 @@ Stubs don't need to be complete — they give `[[wiki-link]]` targets and will b
 
 ### Source Text Preparation
 
-Download the full text and split by chapter headings. Chapters in Moby Dick are marked with `CHAPTER N.` or `ETYMOLOGY` / `EXTRACTS` / `Epilogue`.
+Obtain the full text and identify chapter/section boundaries. For public domain works, Project Gutenberg is a good source. For copyrighted works, work from a physical or licensed digital copy.
 
 ### Batching Strategy
 
-Process ~10 chapters per batch to balance depth with progress:
+Process ~10 chapters per batch to balance depth with progress. Group by narrative arc or thematic focus:
 
-| Batch | Chapters | Narrative Focus |
-|-------|----------|----------------|
-| 1 | 1-9 | Shore: New Bedford, Spouter-Inn, Chapel, Sermon |
-| 2 | 10-23 | Queequeg friendship, Nantucket, boarding the Pequod |
-| 3 | 24-35 | Early voyage, cetology digressions begin |
-| 4 | 36-42 | Quarter-Deck oath, Sunset/Dusk soliloquies, Whiteness |
-| 5-13 | 43-130 | Voyage: whale encounters, gams, Pip's madness, cetology |
-| 14 | 131-Epilogue | The three-day Chase, destruction, survival |
+| Batch | Typical Content |
+|-------|----------------|
+| 1 | Opening: setting, character introductions, world-building |
+| 2-3 | Rising action: conflicts established, relationships develop |
+| 4-6 | Middle: complications, turning points, thematic deepening |
+| 7-8 | Climax approach: escalation, revelations, crises |
+| Final | Climax, resolution, epilogue |
+
+Adjust batch size based on chapter length and density. Short, action-heavy chapters can be batched in larger groups; long, philosophically dense chapters may need smaller batches.
 
 ### Per-Chapter Workflow
 
 For each chapter:
 
-**1. Create the chapter note:**
+**1. Read the chapter carefully.** If working from a source text file, read the relevant section.
+
+**2. Create the chapter note:**
 
 ```python
 write_note(
-  title="Chapter 36 - The Quarter-Deck",
+  title="Chapter <N> - <Title>",
   directory="chapters",
   note_type="Chapter",
-  tags=["chapter", "pivotal", "dramatic"],
+  tags=["chapter", "<arc-phase>"],
   metadata={
-    "chapter_number": 36,
-    "pov": "Ishmael (dramatic mode)",
-    "setting": "The Pequod, quarter-deck",
-    "narrative_mode": "dramatic"
+    "chapter_number": <N>,
+    "pov": "<narrator or POV character>",
+    "setting": "<primary location>",
+    "narrative_mode": "<mode>"
   },
-  content="""# Chapter 36 - The Quarter-Deck
+  content="""# Chapter <N> - <Title>
 
 ## Observations
-- [summary] Ahab reveals his true purpose: hunting Moby Dick. Nails a gold doubloon to the mast as reward.
-- [event] Ahab administers the oath — crew drinks to the death of Moby Dick
-- [event] Starbuck protests but is overridden by Ahab's charisma and the crew's frenzy
-- [tone] Theatrical, ritualistic, escalating from inquiry to frenzy
-- [technique] Written almost entirely as stage directions and dialogue — a play within the novel
-- [quote] "He tasks me; he heaps me; I see in him outrageous strength, with an inscrutable malice sinewing it."
-- [significance] The pivotal scene that transforms a commercial voyage into a revenge quest
-- [foreshadowing] The oath-taking ceremony echoes dark pacts and dooms the enterprise
+- [summary] <1-2 sentence synopsis>
+- [event] <Key plot events>
+- [tone] <Emotional and stylistic atmosphere>
+- [technique] <Notable narrative techniques>
+- [quote] "<Significant passage>"
+- [significance] <Why this chapter matters to the whole>
+- [foreshadowing] <Hints at future events>
 
 ## Relations
-- features [[Captain Ahab]]
-- features [[Starbuck]]
-- features [[Stubb]]
-- features [[Flask]]
-- set_in [[The Pequod]]
-- explores [[Obsession]]
-- explores [[Fate and Free Will]]
-- contains [[The Doubloon]]
-- employs [[Dramatic Monologue]]
-- follows [[Chapter 35 - The Mast-Head]]
-- precedes [[Chapter 37 - Sunset]]"""
+- features [[<Character>]]
+- set_in [[<Location>]]
+- explores [[<Theme>]]
+- contains [[<Symbol>]]
+- employs [[<Literary Device>]]
+- follows [[Chapter <N-1> - <Previous Title>]]
+- precedes [[Chapter <N+1> - <Next Title>]]"""
 )
 ```
 
-**2. Enrich related entities:**
+**3. Enrich related entities:**
 
 ```python
 edit_note(
-  identifier="characters/major/captain-ahab",
+  identifier="characters/major/<character-slug>",
   operation="append",
   heading="Observations",
-  content="""- [arc] Ch.36: Reveals obsession publicly, nails doubloon, administers blood oath
-- [quote] "He tasks me; he heaps me; I see in him outrageous strength" (Ch.36)"""
+  content="""- [arc] Ch.<N>: <What happens to this character>
+- [quote] "<Attributed quote>" (Ch.<N>)"""
 )
 ```
 
-**3. Track progress** using the memory-tasks skill to create a processing task that survives context compaction.
+**4. Track progress** using the memory-tasks skill to create a processing task that survives context compaction.
 
 ### What to Capture Per Chapter
 
@@ -347,7 +348,7 @@ edit_note(
 | `[summary]` | 1-2 sentence chapter synopsis |
 | `[event]` | Key plot events (actions, revelations, arrivals) |
 | `[tone]` | Emotional and stylistic atmosphere |
-| `[technique]` | Narrative innovations (soliloquy, stage direction, catalog) |
+| `[technique]` | Narrative innovations (POV shifts, structural experiments, genre blending) |
 | `[quote]` | Memorable or thematically significant passages |
 | `[significance]` | Why this chapter matters to the whole |
 | `[foreshadowing]` | Hints at future events |
@@ -361,6 +362,17 @@ As each chapter is processed, append observations to relevant entities:
 - **Locations**: `[atmosphere]` as described, `[significance]` in scene
 - **Literary devices**: `[example]` from this chapter
 
+### Adding Prose and Interpretation
+
+After the structured observations are in place, consider adding interpretive prose to major entity notes. Prepend 2-4 paragraphs of critical essay before the Observations section using `edit_note(operation="prepend")`. This prose should:
+
+- Argue for a reading of the character, theme, or symbol — not just describe it
+- Connect the entity to the work's larger concerns and to literary tradition
+- Include subjective opinions clearly marked as such ("In my reading...", "I find...")
+- Ground claims in textual evidence cited by chapter number
+
+The prose adds the interpretive texture that structured observations alone cannot capture.
+
 ## Phase 3: Cross-Referencing
 
 After all chapters are processed:
@@ -372,7 +384,7 @@ For each major character, write a full `[arc]` summary observation covering thei
 For each theme, add `[evolution]` observations tracing how it develops from introduction to resolution.
 
 ### Chapter Parallels
-Add `parallels` and `contrasts_with` relations between structurally similar chapters (e.g., the three soliloquy chapters 37-39, the three-day chase 133-135).
+Add `parallels` and `contrasts_with` relations between structurally similar chapters (e.g., mirrored scenes, repeated settings, thematic echoes).
 
 ### Analysis Notes
 Create synthesis notes in `analysis/`:
@@ -385,24 +397,24 @@ write_note(
   tags=["analysis", "structure"],
   content="""# Narrative Structure
 
-Analysis of Moby Dick's narrative architecture...
+Analysis of the work's narrative architecture.
 
 ## Observations
-- [structure] Three-part arc: shore (1-23), voyage (24-130), chase (131-epilogue)
-- [technique] Alternates dramatic chapters with cetological digressions
+- [structure] <Overall arc description>
+- [technique] <Key narrative strategies>
 ...
 
 ## Relations
-- analyzes [[Captain Ahab]]
-- analyzes [[Ishmael]]
-- explores [[Knowledge and Its Limits]]
+- analyzes [[<Protagonist>]]
+- analyzes [[<Key Character>]]
+- explores [[<Central Theme>]]
 ..."""
 )
 ```
 
 Recommended analysis notes:
 - **Narrative Structure** — overall architecture and pacing
-- **Moby Dick Overview** — synthesis of the complete work
+- **Work Overview** — synthesis of the complete work (summary, thesis, legacy)
 - **Critical Reception** — historical and contemporary interpretations
 
 ### Discover Emergent Entities
@@ -435,7 +447,7 @@ Fix issues found — common fixes:
 - Fields in notes but not schema → add as optional to schema if legitimate
 
 ### Relation Consistency
-Spot-check bidirectional relations: if Chapter X `features [[Ahab]]`, does Ahab `appears_in [[Chapter X]]`? Fix gaps.
+Spot-check bidirectional relations: if Chapter X `features [[Character]]`, does Character have observations referencing Chapter X? Fix gaps.
 
 ## Phase 5: Visualization
 
@@ -452,17 +464,19 @@ canvas(query="type:Theme")
 canvas(query="type:Chapter", layout="timeline")
 ```
 
-## Adapting to Other Works
+## Adapting to Other Genres
 
-This pipeline works for any literary text. Adjust for genre:
+This pipeline works for any literary text. Adjust schemas for genre:
 
 | Genre | Schema Adjustments |
 |-------|-------------------|
+| **Novel** | Base schemas work as-is; add genre-specific Character fields as needed |
 | **Play** | Add `Act` and `Scene` schemas; Character gets `speaking_lines` field |
 | **Poetry collection** | Replace Chapter with `Poem`; add `form`, `meter`, `rhyme_scheme` fields |
 | **Non-fiction** | Replace Chapter with `Section`; add `Argument`, `Evidence` schemas |
 | **Short story collection** | Add `Story` schema with `narrator`, `setting`, `word_count` |
 | **Epic/myth** | Add `Deity`, `Prophecy` schemas; Location gets `mythological_significance` |
+| **Memoir** | Character schema gets `relationship_to_narrator`; add `Memory` schema |
 
 ### Scaling Guidance
 
@@ -485,10 +499,13 @@ This pipeline works for any literary text. Adjust for genre:
 ## Guidelines
 
 - **Seed before processing.** Create entity stubs first so wiki-links resolve immediately during chapter processing.
-- **Batch for sanity.** Processing 10 chapters at a time balances depth with momentum. Track progress with a Task note.
+- **Batch for sanity.** Processing ~10 chapters at a time balances depth with momentum. Track progress with a Task note.
+- **Read the source text.** Don't rely on memory or summaries. Read (or re-read) the actual text for each batch before creating notes. Textual evidence is everything.
 - **Observations are your index.** The knowledge graph's value comes from categorized observations. Be generous with categories and specific with content.
 - **Relations are your web.** Every chapter should link to characters, themes, locations, and devices. Every entity should link back to chapters where it appears.
 - **Enrich iteratively.** Entity notes grow richer with each chapter. Don't try to write the perfect character note upfront — append as you go.
+- **Add prose for depth.** After structured data is in place, add interpretive essays to major notes. The prose captures what observations cannot: argument, nuance, opinion, and voice.
 - **Validate periodically.** Run `schema_validate` after each batch, not just at the end. Catch drift early.
 - **Quote generously.** Literary analysis lives on textual evidence. Include significant quotes as `[quote]` observations with chapter attribution.
+- **Review and revise.** After completing all chapters, review the full graph from an external perspective. Look for thin notes, missing connections, and gaps in coverage. The first pass is never the last.
 - **Analysis comes last.** Synthesis notes in `analysis/` should be written after all chapters are processed, when you have the full picture.
