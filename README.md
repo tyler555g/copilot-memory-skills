@@ -21,6 +21,7 @@ Basic Memory provides the MCP server — tools like `write_note`, `search_notes`
 | **memory-lifecycle** | Entity lifecycle management — status transitions through folder-based organization, archiving completed work. Core principle: archive, never delete. | When marking items complete, archiving old entities, or managing folder-based status workflows. |
 | **memory-ingest** | Process unstructured external input into structured entities. Parses meeting transcripts, conversation logs, and pasted documents. | When pasting a transcript, conversation log, or external document that should become structured knowledge. |
 | **memory-research** | Web research synthesized into Basic Memory entities. Researches a subject, checks for existing knowledge, presents findings, and creates entity notes. | When asked to research a company, person, technology, or topic. |
+| **memory-literary-analysis** | Analyze a complete literary work into a structured knowledge graph — characters, themes, chapters, locations, symbols, and literary devices. | Full-text literary analysis, book club companions, teaching resources, or research projects. |
 
 ## Basic Memory Cloud
 
