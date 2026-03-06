@@ -80,6 +80,8 @@ Numeric values use numeric comparison; strings use lexicographic comparison.
 - `$in` and array-contains require non-empty lists
 - `$between` requires exactly `[min, max]`
 
+> **Warning:** Operators MUST include the `$` prefix — write `$gte`, not `gte`. Without the prefix the filter is treated as an exact-match key and will silently return no results. Correct: `{"confidence": {"$gte": 0.7}}`. Wrong: `{"confidence": {"gte": 0.7}}`.
+
 ## Using `search_notes` with Metadata
 
 Pass `metadata_filters`, `tags`, or `status` to `search_notes`. Omit `query` for filter-only searches, or combine text and filters together.
