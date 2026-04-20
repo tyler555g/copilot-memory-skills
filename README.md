@@ -76,7 +76,7 @@ Claude Desktop loads skills through **Settings > Capabilities**:
 
 Repeat for each skill you want. Custom uploaded skills are private to your account.
 
-> **Tip:** Start with **memory-notes** (core note-writing patterns) and add others as needed. You don't need all 9 at once.
+> **Tip:** Start with **memory-notes** (core note-writing patterns) and add others as needed. You don't need all 10 at once.
 
 See [Using Skills in Claude](https://support.claude.com/en/articles/12512180-using-skills-in-claude) for more details.
 

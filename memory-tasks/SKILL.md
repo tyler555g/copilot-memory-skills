@@ -5,13 +5,13 @@ description: "Task management via Basic Memory schemas: create, track, and resum
 
 # Memory Tasks
 
-Manage work-in-progress using Basic Memory's schema system. Tasks are just notes with `type: Task` — they live in the knowledge graph, validate against a schema, and survive context compaction.
+Manage work-in-progress using Basic Memory's schema system. Tasks are just notes with `type: task` — they live in the knowledge graph, validate against a schema, and survive context compaction.
 
 ## When to Use
 
 - **Starting multi-step work** (3+ steps, or anything that might outlast the context window)
 - **After compaction/restart** — search for active tasks to resume
-- **Pre-compaction flush** — update all active tasks with current state
+- **Pause protocol** — update all active tasks with current state before compaction
 - **On demand** — user asks to create, check, or manage tasks
 
 ## Task Schema
@@ -85,7 +85,9 @@ Frontmatter and observations serve different access patterns:
 - **Frontmatter** (`metadata`) → powers `search_notes` with `metadata_filters`. This is how agents find tasks by status, priority, etc.
 - **Observations** (`- [status] active`) → powers `schema_validate`. This is how the schema system checks conformance.
 
-Keep `status` and `current_step` in both. For all other fields, pick the location that makes semantic sense and be consistent. Don't let the two diverge — if frontmatter says `status: done` but observations say `[status] active`, you have a split-brain state.
+Any schema-required fields must exist as observations, because `schema_validate` only recognizes required fields when they appear as observation categories. For Task notes, that includes `description` and any other non-optional schema fields.
+
+Duplicate only the subset of fields you want to metadata-filter (like `status` and `current_step`) into frontmatter, and keep those duplicated values in sync with the observations. Don't let the two diverge — if frontmatter says `status: done` but observations say `[status] active`, you have a split-brain state.
 
 ### Key Principles
 
@@ -201,3 +203,4 @@ With BM's schema system, tasks are fully queryable:
 - **Close finished tasks** — Don't leave completed work as `active`
 - **Link related tasks** — Use `parent_task [[X]]` or relations to connect related work
 - **Schema validation is your friend** — Run `schema_validate(noteType="Task")` periodically to catch incomplete tasks
+- **Keep task notes dense** — Task notes compete for context window space. Every token should earn its place: concrete steps, essential context, no filler. Stale context in a task note is [context distraction](https://github.com/tyler555g/best-practices/blob/main/packages/content/technology_and_information/data_science_and_ai/context-engineering.md) — it dilutes signal when the task is retrieved

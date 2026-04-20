@@ -5,7 +5,7 @@ description: "Defragment and reorganize agent memory files: split bloated files,
 
 # Memory Defrag
 
-Reorganize memory files for clarity, efficiency, and relevance. Like filesystem defragmentation but for knowledge.
+Reorganize memory files for clarity, efficiency, and relevance. Defrag combats [context rot and context distraction](https://github.com/tyler555g/best-practices/blob/main/packages/content/technology_and_information/data_science_and_ai/context-engineering.md) — stale or noisy entries that degrade agent behavior when notes are retrieved.
 
 ## When to Run
 
