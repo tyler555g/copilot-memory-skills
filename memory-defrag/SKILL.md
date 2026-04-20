@@ -63,7 +63,7 @@ Resolved error traces deserve special attention:
 edit_note(
   identifier="MEMORY",
   operation="find_replace",
-  find_text="- [issue] MCP server crashes on reconnect...\n- [workaround]...\n- [status] investigating",
+  find_text="- [issue] MCP server crashes on reconnect — repro: disconnect and reconnect rapidly\n- [workaround] Restart the MCP server manually after each disconnect\n- [status] investigating",
   content="- [lesson] MCP reconnect stability: fixed in v2.1.0 — upgrade if seeing crashes #mcp"
 )
 ```
