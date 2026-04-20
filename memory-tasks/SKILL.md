@@ -92,7 +92,7 @@ Keep `status` and `current_step` in both. For all other fields, pick the locatio
 - **Steps are concrete and checkable** — "Implement X in file Y", not "figure out stuff"
 - **Context is for post-amnesia resumption** — Write it as if explaining to a smart person who knows nothing about what you've been doing
 - **Relations link to other entities** — `parent_task [[Other Task]]`, `related_to [[Some Note]]`
-- **`note_type` is case-sensitive** — `write_note(note_type="Task")` stores the type as lowercase `task` in frontmatter. Use `note_types=["task"]` (lowercase) in search queries.
+- **`note_type` is normalized to lowercase** — `write_note(note_type="Task")` stores the type as lowercase `task` in frontmatter. Use lowercase values such as `note_types=["task"]` in search queries.
 
 ## Resume Protocol
 

@@ -51,7 +51,7 @@ npx skills add basicmachines-co/basic-memory-skills --skill memory-tasks
 npx skills add basicmachines-co/basic-memory-skills --agent claude
 
 # Install for GitHub Copilot CLI
-npx skills add basicmachines-co/basic-memory-skills -a github-copilot
+npx skills add basicmachines-co/basic-memory-skills --agent github-copilot
 
 # List available skills without installing
 npx skills add basicmachines-co/basic-memory-skills --list
@@ -99,13 +99,13 @@ cp -r memory-tasks <agent-skills-dir>/
 
 ### Bundled with OpenClaw plugin
 
-All 9 skills are also bundled in the [`@basicmemory/openclaw-basic-memory`](https://github.com/basicmachines-co/openclaw-basic-memory) plugin — no extra install step needed if you use OpenClaw.
+All 10 skills are also bundled in the [`@basicmemory/openclaw-basic-memory`](https://github.com/basicmachines-co/openclaw-basic-memory) plugin — no extra install step needed if you use OpenClaw.
 
 ## Compatible Agents
 
 These skills work with any AI coding agent that supports the SKILL.md format:
 
-- **GitHub Copilot CLI** — `npx skills add basicmachines-co/basic-memory-skills -a github-copilot` installs to `~/.copilot/skills/`
+- **GitHub Copilot CLI** — `npx skills add basicmachines-co/basic-memory-skills --agent github-copilot` installs to `~/.copilot/skills/`
 - **Claude Desktop** — upload skill ZIPs via Settings > Capabilities
 - **Claude Code** — loads skills from `~/.claude/skills/` or `.claude/skills/`
 - **Cursor** — AI-powered coding with skill support
