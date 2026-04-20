@@ -179,7 +179,7 @@ Basic Memory has two querying modes that access notes differently:
 - **`search_notes` with `metadata_filters`** — reads frontmatter. This is how you find notes by status, priority, etc.
 - **`schema_validate`** — checks for fields as observation categories in the note body (e.g., `- [status] active`).
 
-A field stored only in frontmatter fails schema validation. A field stored only in observations can't be metadata-filtered. For fields you need both to query and to validate (like `status`, `current_step`), keep them in both places and keep them in sync. For fields only needed for one purpose, one location is fine.
+A field stored only in frontmatter is not checked by `schema_validate`. If that field is required by the schema, it must also appear as an observation category or validation will report it as missing. A field stored only in observations can't be metadata-filtered. For fields you need both to query and to validate (like `status`, `current_step`), keep them in both places and keep them in sync. For fields only needed for one purpose, one location is fine.
 
 Validation reports:
 - **Missing required fields** — the note lacks a field the schema requires (as an observation category)

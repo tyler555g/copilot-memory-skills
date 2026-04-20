@@ -114,7 +114,7 @@ search_notes(note_types=["task"], status="active")
 # Step 2: Read the full task
 read_note(identifier="tasks/my-active-task")
 
-# Step 3: Validate — last checked box matches current_step
+# Step 3: Validate — current_step is the next step to execute, so the last checked box should be current_step - 1
 # If current_step=3 but steps 1, 2, 3 are all checked → update current_step to 4
 # If steps 1, 2 are checked but current_step=3 → correct, continue with step 3
 ```
