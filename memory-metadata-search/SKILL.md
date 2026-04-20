@@ -182,3 +182,4 @@ search_notes("OAuth", metadata_filters={"status": "in-progress"})
 - **Omit `query` for filter-only searches.** `search_notes(metadata_filters={"status": "active"})` works without a text query.
 - **Dot notation for nesting.** Access nested YAML structures with dots: `{"schema.version": "2"}` queries the `version` key inside a `schema` object.
 - **Tags shortcut is convenient but limited.** `tags` and `status` are sugar for common fields. For anything else, use `metadata_filters` directly.
+- **Consistency enables filtering.** Metadata filters require consistent values across notes. If you use `status: active` sometimes and `status: in-progress` other times for the same concept, filters break. Use schemas to enforce consistency.
