@@ -170,7 +170,7 @@ What to write in `context` before pausing:
 edit_note(
   identifier="tasks/my-active-task",
   operation="find_replace",
-  find_text="## Context\nWhat future-you needs to pick up this work. Include:",
+  find_text="## Context\nWhat future-you needs to pick up this work. Include:\n- Key file paths and repos involved\n- Decisions already made and why\n- What was tried and what worked/didn't\n- Where to look for related context",
   content="""## Context
 Completed: Implemented the database migration script at db/migrate/001.py.
 Next: Run migration against staging. Need DATABASE_URL env var (check .env.staging).

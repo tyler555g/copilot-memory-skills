@@ -36,7 +36,7 @@ Look for these common issues:
 | **Duplicate info** | Same fact in multiple places | Consolidate to one location |
 | **Stale entries** | References to completed work, old dates, resolved issues | Remove or archive |
 | **Resolved error traces** | Debugging logs, failed-attempt history, closed-issue workarounds | Remove — context noise once resolved |
-| **Orphan files** | Files in memory/ never referenced or updated | Review, merge, or remove |
+| **Orphan files** | Files in memory/ that are never referenced or updated | Review, merge, or remove |
 | **Inconsistencies** | Contradictory information across files | Resolve to ground truth |
 | **Poor organization** | Related info scattered across files | Restructure by topic |
 | **Recursive nesting** | `memory/memory/memory/...` directories | Delete nested dirs (indexer bug artifact) |
